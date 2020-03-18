@@ -1,0 +1,17 @@
+.detail-carousel{
+  width:230px;
+  margin: 0 auto
+}
+.detail-carousel img{
+  height: 260px;
+  border-radius: 8px;
+}
+.myTag{
+  cursor: pointer;
+}
+.myTag:hover{
+  opacity: 0.5;
+}
+.left{
+  font-size: 16px;
+}

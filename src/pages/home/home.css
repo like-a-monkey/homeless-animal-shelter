@@ -1,0 +1,31 @@
+/* .overview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-basis: 30%
+} */
+.home-pic{
+  border-radius: 15px;
+  height: 260px;
+  width: 228px;
+}
+.home-pic:hover{
+  box-shadow: 0 2px 7px 2px;
+}
+
+.home-pagination{
+  position: absolute;
+  top:840px;
+}
+
+.home-card{
+  border-radius: 9px;
+}
+
+
+/* .ant-input-search{
+  position: absolute;
+  right: 100px;
+  top: 100px;
+  z-index: 1;
+} */

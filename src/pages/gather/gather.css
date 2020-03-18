@@ -1,0 +1,12 @@
+
+.banner-carousel img{
+  height: 600px;
+  width: 450px;
+  border-radius: 7px;
+}
+.banner-carousel{
+  width: 450px;
+  position: absolute;
+  left: 1050px;
+  bottom: 580px;
+}
