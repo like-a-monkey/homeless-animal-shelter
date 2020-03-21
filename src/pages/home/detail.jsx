@@ -1,8 +1,14 @@
 import React from 'react'
-import {Card, Icon, List, Carousel, Input, Tag, Button} from 'antd'
+import {
+  Card, 
+  List, 
+  Carousel, 
+  Input, 
+  Tag, 
+  Button
+} from 'antd'
 import {withRouter} from 'react-router-dom'
 import {BASE_URL} from '../../config/constant'
-import LinkButton from '../../components/link-button'
 import './detail.css'
 const {Item} = List
 const {Search} = Input
@@ -16,6 +22,7 @@ class Detail extends React.Component{
   }
   render() {
     const selectedAnimal = this.props.animal || {}
+    console.log(selectedAnimal)
     const title = (<Search 
       placeholder="不是理想类型?搜索一下说不定会遇上对的它呢" 
       onSearch={keyword => this.props.handleSearch(keyword)}
@@ -30,7 +37,7 @@ class Detail extends React.Component{
     return <img key={img}
     alt='animalPic'
     src={img.indexOf('.')===-1?BASE_URL+img+'.png':BASE_URL+img}
-    />}):<img src={BASE_URL+'default.jpg'} />}
+    />}):<img alt='default_pic' src={BASE_URL+'default.jpg'} />}
     </Carousel>         
     <List>
       <Item className='left'>
@@ -43,6 +50,7 @@ class Detail extends React.Component{
         <span>标签:
         {selectedAnimal.tags.map((tag, index) => {
         return (<Tag className='myTag' 
+        color='blue'
         key={index} 
         onClick={() => this.props.handleSearch(tag)}>
         {tag}></Tag>)})}

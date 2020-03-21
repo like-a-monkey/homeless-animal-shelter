@@ -1,0 +1,28 @@
+/* .ant-comment-content{
+  border-bottom: 1px dashed gray;
+} */
+.ant-comment-inner{
+  border: 3px solid #90C9FF;
+  margin-bottom: 15px;
+  border-radius: 9px;
+}
+.ant-comment-inner::before{
+  content: '';
+  width: 0;
+  height: 0;
+  border:19px transparent solid;
+  border-right: 19px #90C9FF solid;
+  display: block;
+  transform: translate(-38px, 10px);
+}
+.ant-comment-avatar::before{
+  content: '';
+  width: 0;
+  height: 0;
+  border:18px transparent solid;
+  border-right: 18px #F0F2F5 solid;
+  display: block;
+  transform: translate(-71px, 11px);
+  cursor: default;
+  /* #F0F2F5 背景色*/
+}

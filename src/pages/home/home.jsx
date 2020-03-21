@@ -60,7 +60,7 @@ export default class Home extends React.Component {
   handleDrawer = (animal) => {
     this.setState({drawerVisible: true, selected: animal})
   }
-  handleSearch = async(keyword) => {
+  handleSearch = async (keyword) => {
     const result = await getSearchAnimals(keyword)
     console.log(result)
     if(result.data.length) {
@@ -69,9 +69,10 @@ export default class Home extends React.Component {
         drawerVisible: false, 
         total: result.data.length, 
         pageNum: 1, 
-        renderList: result.data})
+        renderList: result.data
+      })
     } else {
-      message.error('好像没有你想要的呢?试试换个关键词?')
+      message.info('好像没有你想要的呢?试试换个关键词?')
     }
   }
   getAnimalRow = (animalsList) => {
@@ -94,14 +95,14 @@ export default class Home extends React.Component {
   }
 
   render() { 
-    const {animalsList, total, selected, renderList} = this.state
+    const {total, selected, renderList} = this.state
     return <div className='overview'>   
      {renderList.lenth || this.getAnimalRow(renderList)}
      {total?(<Pagination 
       className='home-pagination'
       pageSize={6}
       total={total}
-      defaultCurrent={1} onChange={this.onChange}  />):null}
+      current={this.state.pageNum} onChange={this.onChange}  />):null}
       <Drawer
           width={600}
           placement="right"

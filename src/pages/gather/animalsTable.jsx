@@ -1,8 +1,6 @@
 import React from 'react'
 import {Table, Tag, Input, Button} from 'antd'
-import LinkButton from '../../components/link-button'
 const { Search } = Input
-const { Column, ColumnGroup } = Table
 export default class AnimalsTable extends React.Component{
   constructor(props) {
     super(props)

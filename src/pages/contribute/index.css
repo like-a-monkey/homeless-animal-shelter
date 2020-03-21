@@ -1,0 +1,10 @@
+.pay img{
+  height: 700px;
+  width: 550px;
+}
+.pay{
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

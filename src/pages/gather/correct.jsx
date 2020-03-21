@@ -1,8 +1,17 @@
 import React from 'react'
-import {Form, Input, Col, Row, Select, DatePicker, Button, message, Drawer} from 'antd'
+import {
+  Form, 
+  Input,
+  Col, 
+  Row, 
+  Select, 
+  Button, 
+  message, 
+  Drawer, 
+  } from 'antd'
 import PictureWall from './picturewall'
 import AnimalsTable from './animalsTable'
-import {reqUpdateAnimal, getSearchAnimals} from '../../api/index'
+import {reqUpdateAnimal, getSearchAnimals, reqDeleteImg} from '../../api/index'
 import './gather.css'
 const { Option } = Select
 class Correct extends React.Component {
@@ -18,17 +27,24 @@ class Correct extends React.Component {
     this.animalState = ['流浪中', '被领养', '失踪', '已死亡']
   }
   handleSelect = (selectedAnimal) => {
+    this.initialImgs = selectedAnimal.imgs
     this.setState({selectedAnimal})
   }
   handleSubmit = () => {
+    if(!this.state.selectedAnimal._id) {
+      message.info('请先选择订正对象')
+      return
+    }
     this.props.form.validateFields(async(err, values) => {
       if(!err) {
         var imgs = this.pw.current.getImgs()
         const animal = {imgs, ...values}
         animal._id = this.state.selectedAnimal._id
         animal.state = this.state.selectedAnimal.state
+        const result = this.initialImgs.filter(i => !imgs.includes(i))
+        reqDeleteImg (result) //删除图片
         const response = await reqUpdateAnimal(animal)
-        if(response.status == 0){
+        if(response.status === 0){
           message.success('修改成功')
           this.props.history.push('/home')
         } else {
@@ -37,8 +53,16 @@ class Correct extends React.Component {
         }  
     })
   }
+  handleDeleteImgs = (img) => {
+    let imgs = this.state.selectedAnimal.imgs
+    const index = imgs.indexOf(img)
+    imgs = [...imgs]
+    imgs.splice(index, 1)
+    this.setState({selectedAnimal: {...this.state.selectedAnimal, imgs}})
+  }
   componentDidMount() {
     if(this.props.location.state){
+      this.initialImgs = this.props.location.state.imgs
       this.setState({selectedAnimal: this.props.location.state, drawerVisible: false})
     }
     this.props.location.state = null
@@ -47,7 +71,7 @@ class Correct extends React.Component {
   }
   setSearchAnimalList = async(keyword='') => {
     const response = await getSearchAnimals(keyword)
-    if(response.status == 0){
+    if(response.status === 0){
       this.setState({searchAnimalList: response.data})
     } else {
       message.error('初始化列表失败，请检查网络设置')
@@ -57,11 +81,9 @@ class Correct extends React.Component {
     const {getFieldDecorator} = this.props.form
     const currentState = this.state.selectedAnimal.state
     let name, des, imgs, tags, breed, place, owner, phone, address
-    if(this.props.location.state){
-      ({name, des, imgs, tags, breed, place, owner, phone, address} = this.props.location.state) 
-      //加括号用于给声明过的变量赋值 不加括号会让系统一位{a}为块级代码       
-    } else if(this.state.selectedAnimal.name) {
+    if(this.state.selectedAnimal.name) {
       //用于列表点击是数据更新
+      //加括号用于给声明过的变量赋值 不加括号会让系统一位{a}为块级代码       
       ({name, des, imgs, tags, breed, place, owner, phone, address} = this.state.selectedAnimal)
     }
       return <div>
@@ -177,7 +199,10 @@ class Correct extends React.Component {
       <Row gutter={16}>
       <Col span={12}>
       *上传图片以便确认
-      <PictureWall ref={this.pw} imgs={imgs}></PictureWall>     
+      <PictureWall 
+      handleDeleteImgs={this.handleDeleteImgs}
+      ref={this.pw} 
+      imgs={imgs}></PictureWall>     
       </Col></Row>
       <Form.Item>
       <Button

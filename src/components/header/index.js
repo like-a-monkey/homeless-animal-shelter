@@ -9,8 +9,8 @@ export default class Header extends React.Component {
   }
   render() {
     return (
-      <div className='header'>
-      <img src={require('../../assets/new.jpg')} alt='logo' className='logo'></img>
+      <div>
+        <img src={require('../../assets/new.jpg')} alt='logo' className='logo'></img>
       </div>
     )
   }
